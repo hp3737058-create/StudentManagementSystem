@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 1,
+    "Name": "hetal patel",
+    "RollNumber": "202403103510417",
+    "Course": "BTech",
+    "Email": "hp3737058@gmail.com"
+  },
+  {
+    "Id": 2,
+    "Name": "gauri patil ",
+    "RollNumber": "202403103510418",
+    "Course": "BTech",
+    "Email": "hp3737059@gmail.com"
+  }
+]

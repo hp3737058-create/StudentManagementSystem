@@ -1,44 +1,28 @@
 
-using System.Text.Json;
-using StudentManagementSystem.Models;
+using StudentManagementSystem.Data;
 
-namespace StudentManagementSystem.Data
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<StudentStore>();
+
+var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
 {
-    public class StudentStore
-    {
-        private readonly string _filePath;
-
-        public StudentStore(IWebHostEnvironment environment)
-        {
-            string folder = Path.Combine(
-                environment.ContentRootPath, "App_Data");
-
-            Directory.CreateDirectory(folder);
-
-            _filePath = Path.Combine(folder, "students.json");
-        }
-
-        public List<Student> GetAll()
-        {
-            if (!File.Exists(_filePath))
-                return new List<Student>();
-
-            string json = File.ReadAllText(_filePath);
-
-            return JsonSerializer.Deserialize<List<Student>>(json)
-                   ?? new List<Student>();
-        }
-
-        public void SaveAll(List<Student> students)
-        {
-            string json = JsonSerializer.Serialize(
-                students,
-                new JsonSerializerOptions
-                {
-                    WriteIndented = true
-                });
-
-            File.WriteAllText(_filePath, json);
-        }
-    }
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
+
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthorization();
+
+app.MapStaticAssets();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Students}/{action=Index}/{id?}")
+    .WithStaticAssets();
+
+app.Run();
