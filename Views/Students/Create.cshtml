@@ -1,0 +1,54 @@
+
+@model StudentManagementSystem.Models.Student
+
+@{
+    ViewData["Title"] = "Add Student";
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm mx-auto" style="max-width: 650px;">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Add New Student</h4>
+        </div>
+
+        <div class="card-body p-4">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Student Name</label>
+                    <input asp-for="Name" class="form-control"
+                           placeholder="Enter student name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RollNumber" class="form-label">Roll Number</label>
+                    <input asp-for="RollNumber" class="form-control"
+                           placeholder="Enter roll number" />
+                    <span asp-validation-for="RollNumber" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Course" class="form-label">Course</label>
+                    <input asp-for="Course" class="form-control"
+                           placeholder="e.g. BCA, BSc IT, BTech" />
+                    <span asp-validation-for="Course" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <input asp-for="Email" class="form-control"
+                           placeholder="student@example.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Student</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+
+@model List<StudentManagementSystem.Models.Student>
+
+@{
+    ViewData["Title"] = "Student Management";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold">Student Management System</h1>
+            <p class="text-muted">Manage your student records easily.</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary">+ Add Student</a>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Student Records</h5>
+        </div>
+
+        <div class="card-body">
+            @if (Model.Count == 0)
+            {
+                <div class="text-center py-5">
+                    <h5>No students found</h5>
+                    <p class="text-muted">Add your first student to get started.</p>
+                    <a asp-action="Create" class="btn btn-primary">Add Student</a>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Name</th>
+                                <th>Course</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in Model)
+                            {
+                                <tr>
+                                    <td>@student.RollNumber</td>
+                                    <td>@student.Name</td>
+                                    <td>@student.Course</td>
+                                    <td>@student.Email</td>
+                                    <td>
+                                        <a asp-action="Edit"
+                                           asp-route-id="@student.Id"
+                                           class="btn btn-sm btn-warning">Edit</a>
+
+                                        <form asp-action="Delete"
+                                              asp-route-id="@student.Id"
+                                              method="post"
+                                              class="d-inline"
+                                              onsubmit="return confirm('Are you sure you want to delete this student?');">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
